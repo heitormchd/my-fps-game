@@ -1,0 +1,13 @@
+#ifndef RENDER_H
+#define RENDER_H
+
+#include <SDL3/SDL.h>
+
+bool RenderInitSuccess(void);
+void RenderBegin(void);
+void RenderEnd(void);
+void RenderClose(void);
+
+SDL_Renderer *GetRender();
+
+#endif
