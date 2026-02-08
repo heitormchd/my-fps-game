@@ -29,6 +29,7 @@ void GameUpdate(void){
 
 void GameRender(void){
     RenderBegin();
+    RenderMap2D();
     RenderEnd();
 }
 
