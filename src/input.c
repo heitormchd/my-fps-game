@@ -1,7 +1,7 @@
 #include "input.h"
 #include "game.h"
 
-#include <SDL3/SDL.h>
+static InputState inputKey;
 
 void InputUpdate(void){
     SDL_Event event;
@@ -10,4 +10,15 @@ void InputUpdate(void){
             GameRequestQuit();
         }
     }
+
+    const bool *keys = SDL_GetKeyboardState(NULL);
+
+    inputKey.forwardPressed   = keys[SDL_SCANCODE_W];
+    inputKey.backwardPressed  = keys[SDL_SCANCODE_S];
+    inputKey.leftPressed      = keys[SDL_SCANCODE_A];
+    inputKey.rightPressed     = keys[SDL_SCANCODE_D];
+}
+
+InputState InputKeyGet(void){
+    return inputKey;
 }

@@ -1,6 +1,7 @@
 #include "render.h"
 #include "window.h"
 #include "map.h"
+#include "player.h"
 
 static SDL_Renderer *renderer = NULL;
 
@@ -53,4 +54,48 @@ void RenderMap2D(void){
             }
         }
     }
+}
+
+void RenderPlayer2D(void){
+    Player player = PlayerGet();
+    const int radius = 8;
+
+    // player circle
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    for (int y = - radius; y <= radius; y++){
+        for (int x = - radius; x <= radius; x++){
+            if(x * x + y * y <= radius * radius){
+                SDL_RenderPoint(renderer, 
+                    player.pos.x * TILE_SIZE + x, 
+                    player.pos.y * TILE_SIZE + y);
+            }
+        }
+    }
+
+    // player direction
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    SDL_RenderLine(
+        renderer,
+        player.pos.x * TILE_SIZE,
+        player.pos.y * TILE_SIZE,
+        (player.pos.x + player.dir.x) * TILE_SIZE,
+        (player.pos.y + player.dir.y) * TILE_SIZE
+    );
+
+    // camera plane
+    SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
+    SDL_RenderLine(
+        renderer,
+        (player.pos.x + player.dir.x) * TILE_SIZE,
+        (player.pos.y + player.dir.y) * TILE_SIZE,
+        (player.pos.x + player.dir.x + player.plane.x) * TILE_SIZE,
+        (player.pos.y + player.dir.y + player.plane.y) * TILE_SIZE
+    );
+    SDL_RenderLine(
+        renderer,
+        (player.pos.x + player.dir.x) * TILE_SIZE,
+        (player.pos.y + player.dir.y) * TILE_SIZE,
+        (player.pos.x + player.dir.x - player.plane.x) * TILE_SIZE,
+        (player.pos.y + player.dir.y - player.plane.y) * TILE_SIZE
+    );  
 }

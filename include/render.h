@@ -10,6 +10,7 @@ void RenderBegin(void);
 void RenderEnd(void);
 void RenderClose(void);
 void RenderMap2D(void);
+void RenderPlayer2D(void);
 
 SDL_Renderer *GetRender();
 
